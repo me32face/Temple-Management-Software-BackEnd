@@ -8,7 +8,7 @@ const donationSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
   purpose: { type: String, required: true },
   paymentMethod: { type: String, enum: ['Cash', 'UPI'], required: true },
-  paymentProof: { type: String },  // Could store file URL or UPI ref
+  paymentProof: { type: String },
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 });
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const cors = require('cors'); // ✅ Add this line
+const cors = require('cors');
 const connectDB = require('./config/db');
 
 dotenv.config();
@@ -10,7 +10,9 @@ const app = express();
 
 // ✅ Enable CORS for your frontend (Vite)
 app.use(cors({
-  origin: 'https://temple-management-software-front-en.vercel.app/', // allow frontend during development
+  origin: ['https://temple-management-software-front-en.vercel.app',
+    'http://localhost:5173'
+  ],
   credentials: true,               // needed if using cookies or auth headers
 }));
 
