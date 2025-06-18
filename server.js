@@ -10,7 +10,7 @@ const app = express();
 
 // ✅ Enable CORS for your frontend (Vite)
 app.use(cors({
-  origin: 'https://localhost:5173', // allow frontend during development
+  origin: 'https://temple-management-software-front-en.vercel.app/', // allow frontend during development
   credentials: true,               // needed if using cookies or auth headers
 }));
 
