@@ -2,7 +2,7 @@ const Devotee = require('../models/Devotee');
 
 exports.getDevotees = async (req, res) => {
   try {
-    const devotees = await Devotee.find();
+    const devotees = await Devotee.find().sort({ createdAt: -1 });
     res.json(devotees);
   } catch (err) {
     res.status(500).json({ msg: 'Server error' });

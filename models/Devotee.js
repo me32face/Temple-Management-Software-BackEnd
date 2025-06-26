@@ -7,7 +7,13 @@ const devoteeSchema = new mongoose.Schema({
   pincode: { type: String },
   whatsappNumber: { type: String },
   secondaryNumber: { type: String },
-  createdAt: { type: Date, default: Date.now }
-});
+  roles: {
+    trustMember: { type: Boolean, default: false },
+    nonTrustMember: { type: Boolean, default: false },
+    common: { type: Boolean, default: false },
+    executiveCommittee: { type: Boolean, default: false },
+    kudumbam: { type: Boolean, default: false },
+  }
+}, { timestamps: true }); // Adds createdAt and updatedAt
 
 module.exports = mongoose.model('Devotee', devoteeSchema);

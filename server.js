@@ -9,9 +9,20 @@ connectDB();
 const app = express();
 
 // ✅ Enable CORS for your frontend (Vite)
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://temple-management-software-front-en.vercel.app',
+];
+
 app.use(cors({
-  origin: 'https://temple-management-software-front-en.vercel.app', // allow frontend during development
-  credentials: true,               // needed if using cookies or auth headers
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
 }));
 
 // Body parser
