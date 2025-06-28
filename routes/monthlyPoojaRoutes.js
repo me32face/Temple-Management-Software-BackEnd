@@ -8,6 +8,11 @@ router.post('/persons', ctrl.createPerson);
 router.get('/persons/:id', ctrl.getPersonById);
 router.put('/persons/:id', ctrl.updatePerson);
 router.delete('/persons/:id', ctrl.deletePerson);
+router.get('/persons', (req, res) => {
+  console.log('✅ GET /persons route hit');
+  res.send('working');
+});
+
 
 
 
