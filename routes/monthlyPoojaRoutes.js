@@ -3,7 +3,7 @@ const router = express.Router();
 const ctrl = require('../controllers/monthlyPoojaController');
 
 // Persons
-router.get('/persons', ctrl.getAllPersons);
+// router.get('/persons', ctrl.getAllPersons);
 router.post('/persons', ctrl.createPerson);
 router.get('/persons/:id', ctrl.getPersonById);
 router.put('/persons/:id', ctrl.updatePerson);
