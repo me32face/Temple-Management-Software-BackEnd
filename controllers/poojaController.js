@@ -31,11 +31,11 @@ exports.getPooja = async (req, res) => {
 
 exports.createPooja = async (req, res) => {
   try {
-    const receiptNumber = await generateReceiptNumber();
-
+    const receiptNumber = await generateReceiptNumber(); // keep auto-generation
     const pooja = new Pooja({
       ...req.body,
-      receiptNumber
+      receiptNumber // system one
+      // manualReceiptNumber is part of req.body if provided
     });
 
     await pooja.save();
@@ -44,6 +44,7 @@ exports.createPooja = async (req, res) => {
     res.status(400).json({ msg: 'Invalid data', error: err.message });
   }
 };
+
 
 exports.updatePooja = async (req, res) => {
   try {

@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
 const poojaSchema = new mongoose.Schema({
-  receiptNumber: { type: String, required: true, unique: true },
+  receiptNumber: { type: String, required: true, unique: true }, // auto-generated
+  manualReceiptNumber: { type: String }, // ✅ new optional manual entry
   poojaName: { type: String, required: true },
   date: { type: Date, required: true },
   amount: { type: Number, required: true },
