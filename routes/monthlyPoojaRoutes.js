@@ -9,13 +9,9 @@ router.get('/persons/:id', ctrl.getPersonById);
 router.put('/persons/:id', ctrl.updatePerson);
 router.delete('/persons/:id', ctrl.deletePerson);
 
-
-
 // Records
 router.get('/persons/:id/records', ctrl.getRecordsByPerson);
 router.post('/records', ctrl.createRecord);
 router.put('/records/:id', ctrl.updateRecord);
-
-
 
 module.exports = router;

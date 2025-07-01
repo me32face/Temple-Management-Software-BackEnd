@@ -14,10 +14,10 @@ exports.getAllPersons = async (req, res) => {
 // Create a new person
 exports.createPerson = async (req, res) => {
   try {
-    const { name, phone, nakshatra, address } = req.body;
+    const { name, poojaName, phone, nakshatra, address } = req.body;
     if (!name) return res.status(400).json({ error: 'Name is required' });
 
-    const person = new MonthlyPoojaPerson({ name, phone, nakshatra, address });
+    const person = new MonthlyPoojaPerson({ name, poojaName, phone, nakshatra, address });
     await person.save();
     res.status(201).json(person);
   } catch (err) {
@@ -45,7 +45,6 @@ exports.createRecord = async (req, res) => {
       return res.status(400).json({ error: 'person, year, and month are required' });
     }
 
-    // 💥 Check if a record already exists
     const existing = await MonthlyPoojaRecord.findOne({ person, year, month });
     if (existing) {
       return res.status(400).json({ error: `Record for ${month} ${year} already exists for this person.` });
@@ -70,7 +69,6 @@ exports.createRecord = async (req, res) => {
   }
 };
 
-
 // Update existing record
 exports.updateRecord = async (req, res) => {
   try {
@@ -84,12 +82,11 @@ exports.updateRecord = async (req, res) => {
   }
 };
 
-// Delete record
+// Delete person and related records
 exports.deletePerson = async (req, res) => {
   const { id } = req.params;
-
   try {
-    await MonthlyPoojaRecord.deleteMany({ person: id }); // optional cleanup
+    await MonthlyPoojaRecord.deleteMany({ person: id });
     await MonthlyPoojaPerson.findByIdAndDelete(id);
     res.json({ message: 'Person and related records deleted' });
   } catch (err) {
@@ -109,6 +106,7 @@ exports.getPersonById = async (req, res) => {
   }
 };
 
+// Update person details
 exports.updatePerson = async (req, res) => {
   try {
     const { id } = req.params;
@@ -119,4 +117,3 @@ exports.updatePerson = async (req, res) => {
     res.status(500).json({ error: 'Failed to update person' });
   }
 };
-
