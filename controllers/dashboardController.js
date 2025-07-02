@@ -5,17 +5,14 @@ const Pooja = require('../models/Pooja');
 
 exports.getDashboardData = async (req, res) => {
   try {
-    const { type, from, to } = req.query;
+    const { type, from, to, includeUnpaid } = req.query;
 
     let matchQuery = {};
-
     const today = new Date();
     const startOfDay = new Date(today.setHours(0, 0, 0, 0));
     const endOfDay = new Date(today.setHours(23, 59, 59, 999));
-
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59, 999);
-
     const startOfYear = new Date(today.getFullYear(), 0, 1);
     const endOfYear = new Date(today.getFullYear(), 11, 31, 23, 59, 59, 999);
 
@@ -35,15 +32,21 @@ exports.getDashboardData = async (req, res) => {
       };
     }
 
-    // Donations
+    // Apply filter only to Pooja if includeUnpaid is false
+    const poojaMatch = {
+      ...matchQuery,
+      ...(includeUnpaid === 'true' ? {} : { paymentPending: false }),
+    };
+
+    // Donations - do NOT filter by paymentPending
     const donationAgg = await Donation.aggregate([
       { $match: matchQuery },
       { $group: { _id: null, total: { $sum: '$amount' } } }
     ]);
 
-    // Poojas
+    // Poojas - filter paymentPending only if needed
     const poojaAgg = await Pooja.aggregate([
-      { $match: matchQuery },
+      { $match: poojaMatch },
       { $group: { _id: null, total: { $sum: '$amount' } } }
     ]);
 
@@ -53,7 +56,7 @@ exports.getDashboardData = async (req, res) => {
       { $group: { _id: null, total: { $sum: '$amount' } } }
     ]);
 
-    // Devotee count (always total)
+    // Devotee count
     const devoteeCount = await Devotee.countDocuments();
 
     const donationTotal = donationAgg[0]?.total || 0;
