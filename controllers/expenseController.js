@@ -2,7 +2,8 @@ const Expense = require('../models/Expense');
 
 exports.getExpenses = async (req, res) => {
   try {
-    const expenses = await Expense.find();
+    const expenses = await Expense.find().sort({ date: -1 });
+    console.log(expenses[0]);
     res.json(expenses);
   } catch (err) {
     res.status(500).json({ msg: 'Server error' });
