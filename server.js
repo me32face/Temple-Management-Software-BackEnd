@@ -8,7 +8,6 @@ connectDB();
 
 const app = express();
 
-// ✅ Enable CORS for your frontend (Vite)
 const allowedOrigins = [
   'http://localhost:5173',
   'https://temple-management-software-front-en.vercel.app',
@@ -25,7 +24,6 @@ app.use(cors({
   credentials: true,
 }));
 
-// Body parser
 app.use(express.json());
 
 // ✅ API Routes
@@ -37,6 +35,7 @@ app.use('/api/staff', require('./routes/staff'));
 app.use('/api/expenses', require('./routes/expenses'));
 app.use('/api/dashboard', require('./routes/dashboard'));
 app.use('/api/monthly-pooja', require('./routes/monthlyPoojaRoutes'));
+app.use('/api/ramayana', require('./routes/ramayanaRoutes'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
