@@ -1,6 +1,8 @@
+// server.js
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 
 dotenv.config();
@@ -8,11 +10,13 @@ connectDB();
 
 const app = express();
 
+// ✅ List of allowed origins
 const allowedOrigins = [
   'http://localhost:5173',
   'https://temple-management-software-front-en.vercel.app',
 ];
 
+// ✅ CORS config with credentials
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -21,9 +25,12 @@ app.use(cors({
       callback(new Error('Not allowed by CORS'));
     }
   },
+  credentials: true,
 }));
 
+// ✅ Middleware
 app.use(express.json());
+app.use(cookieParser());
 
 // ✅ API Routes
 app.use('/api/auth', require('./routes/auth'));
