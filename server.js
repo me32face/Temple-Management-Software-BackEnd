@@ -41,6 +41,7 @@ app.use('/api/expenses', require('./routes/expenses'));
 app.use('/api/dashboard', require('./routes/dashboard'));
 app.use('/api/monthly-pooja', require('./routes/monthlyPoojaRoutes'));
 app.use('/api/ramayana', require('./routes/ramayanaRoutes'));
+app.use('/api/old-pending-payments', require('./routes/oldPendingPayments'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
